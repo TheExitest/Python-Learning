@@ -4,20 +4,24 @@
 	Input tylko wartosci liczbowe, zmieniac liczby ujemne na naturalne DONE
 	Edycja pliku DONE
 	GUI
-	Tekst do podania	
+	Tekst do podania	DONE
 """
 import time
 import datetime
 
-
+ #Time input
 class Podaj_czas:
 	
 	@staticmethod
 	def min_input():
 		while True:
 			try:
-				minuty = abs(int(input("Minut: ")))
-				return minuty
+				minuty = input("Minut: ")
+				if len(minuty)==0:
+					minuty = 0
+					return minuty
+				else:
+					return abs(int(minuty))
 			except:
 				print ("Wpisz wartość w cyfrach arabskich (0,1,2,3,4,5,6,7,8,9)")
 
@@ -26,8 +30,12 @@ class Podaj_czas:
 	def sec_input():
 		while True:
 			try:
-				sekundy = abs(int(input("Sekund: ")))
-				return sekundy
+				sekundy = input("Sekund: ")
+				if len(sekundy)==0:
+					sekundy = 0
+					return sekundy
+				else:
+					return abs(int(sekundy))
 			except:
 				print ("Wpisz wartość w cyfrach arabskich (0,1,2,3,4,5,6,7,8,9)")
 
@@ -37,7 +45,7 @@ def TimeChanger(minuty, sekundy):
     Sek = Sek + int(sekundy)
     return  int(Sek)
 
-
+    #Counting down, editing TXT file
 def odliczanie(odliczacz):
 	a=0
 	czas_pozostaly = odliczacz
@@ -49,15 +57,16 @@ def odliczanie(odliczacz):
 		time.sleep(1)
 		czas_txt=open(nazwa_pliku, "w")
 		czas_txt.write(f"{wiadomosc} {czas_pozostaly2} Sekund")
-
-		#print(f"{czas_pozostaly2} Sekund || Czas systemowy {str(datetime.datetime.now().time())}")
+		print(f"{czas_pozostaly2} Sekund || Czas systemowy {str(datetime.datetime.now().time())}")
 
 nazwa_pliku = str(input("Podaj nazwe pliku z końcówką .txt "))
+czas_txt=open(nazwa_pliku, "w")
 wiadomosc = str(input("Podaj wiadomosc: "))
 print("Podaj czas do odliczenia ")
+
+
 minuty = Podaj_czas.min_input()
 sekundy = Podaj_czas.sec_input()
-czas_txt=open(nazwa_pliku, "w")
 
 odliczacz=TimeChanger(minuty,sekundy)
 print(odliczanie(odliczacz))
